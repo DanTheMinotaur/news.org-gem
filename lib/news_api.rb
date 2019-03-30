@@ -5,7 +5,11 @@ require 'json'
 
 class NewsAPI
 
+  ##
+  # Creates object for accessing data from https://newsapi.org/
   def initialize(api_key)
+    ##
+    #
     @api_key = api_key
     @base_url = 'https://newsapi.org/v2/everything?apiKey=' + @api_key
   end
@@ -18,7 +22,7 @@ class NewsAPI
         Date.parse(date)
       rescue ArgumentError
         date = Date.today - 30
-        print('Invalid date format, defaulting to ' + date)
+        puts 'Invalid date format, defaulting to ' + date
       end
       uri_query += '&from=' + date
     end
@@ -35,8 +39,6 @@ class NewsAPI
 
     puts @base_url + uri_query
 
-    response = JSON.parse(Net::HTTP.get URI(@base_url + uri_query))
-
-    return response
+    JSON.parse(Net::HTTP.get URI(@base_url + uri_query))
   end
 end
